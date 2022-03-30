@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MakeLavaRise : MonoBehaviour
+public class GroundController : MonoBehaviour
 {
-    public ParticleSystem particles;
+    public ParticleSystem particlesPrefab;
+    private ParticleSystem particles;
 
     private float lavaRiseWaitTime = 0.00001f;
     private float lavaRiseRate = 0.01f;
@@ -12,6 +13,7 @@ public class MakeLavaRise : MonoBehaviour
     void Start()
     {
         StartCoroutine(MakeLavalRiseRoutine());
+        particles = Instantiate(particlesPrefab);
     }
 
     void Update()
