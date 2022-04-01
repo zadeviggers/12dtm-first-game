@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundController : MonoBehaviour
+public class LavaController : MonoBehaviour
 {
     public ParticleSystem particlesPrefab;
     private ParticleSystem particles;
