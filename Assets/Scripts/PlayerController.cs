@@ -7,8 +7,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private float walkSpeed = 5.1f;
-    private float jumpSpeed = 300.1f;
-    private float airSpeedMultiplier = 1.1f;
+    private float jumpSpeed = 200.1f;
+    private float airSpeedMultiplier = 1.4f;
 
     private bool isOnGround = false;
     private bool canJump = false;
