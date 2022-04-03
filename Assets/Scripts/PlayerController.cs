@@ -6,12 +6,12 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
 
-    private float walkSpeed = 20.1f;
-    private float jumpSpeed = 800.1f;
+    private float walkSpeed = 5.1f;
+    private float jumpSpeed = 300.1f;
+    private float airSpeedMultiplier = 1.1f;
 
     private bool isOnGround = false;
     private bool canJump = false;
-
 
     // Start is called before the first frame update
     void Start()
@@ -26,13 +26,13 @@ public class PlayerController : MonoBehaviour
         float horizontalInput = Input.GetAxis("Horizontal");
 
         // Slow player movement in the air
-        float airSlowDown = 1.0f;
+        float airMultiplier = 1.0f;
         if (!isOnGround)
         {
-            airSlowDown = 0.1f;
+            airMultiplier = airSpeedMultiplier;
         }
 
-        rb.AddForce(Vector2.right * horizontalInput * walkSpeed * airSlowDown);
+        rb.AddForce(Vector2.right * horizontalInput * walkSpeed * airMultiplier);
 
         // Jumping
         float jumpingInput = Input.GetAxis("Vertical");
