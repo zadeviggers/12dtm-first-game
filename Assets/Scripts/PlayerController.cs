@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody2D rb;
+    private GameManager gameManager;
 
     private float walkSpeed = 5.1f;
     private float jumpSpeed = 200.1f;
@@ -13,10 +14,14 @@ public class PlayerController : MonoBehaviour
     private bool isOnGround = false;
     private bool canJump = false;
 
+    public ParticleSystem deathParticles;
+    public GameObject gameManagerObject;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        gameManager = gameManagerObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -72,5 +77,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void KillPlayer() { }
+    void KillPlayer() {
+        Instantiate(deathParticles, gameObject.transform);
+        gameManager.Lose();
+    }
 }

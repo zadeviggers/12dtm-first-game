@@ -15,4 +15,8 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    public void Lose() {
+        Debug.Log("Game over!");
+    }
 }
