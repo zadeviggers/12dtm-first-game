@@ -55,6 +55,10 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Deadly"))
         {
             KillPlayer();
+        } 
+        else if (collision.gameObject.CompareTag("Finish"))
+        {
+            gameManager.GoToNextLevel();
         }
     }
 

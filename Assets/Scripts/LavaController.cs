@@ -8,7 +8,7 @@ public class LavaController : MonoBehaviour
     private ParticleSystem particles;
 
     private float lavaRiseWaitTime = 0.00001f;
-    private float lavaRiseRate = 0.01f;
+    private float lavaRiseRate = 0.03f;
 
     void Start()
     {

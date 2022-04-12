@@ -1,9 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
+    public string nextLevelName;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +22,10 @@ public class GameManager : MonoBehaviour
 
     public void Lose() {
         Debug.Log("Game over!");
+    }
+
+    public void GoToNextLevel()
+    {
+        SceneManager.LoadScene(nextLevelName);
     }
 }
