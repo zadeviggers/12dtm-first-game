@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     public void Lose() {
         Debug.Log("Game over!");
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene(currentSceneName);
     }
 
     public void GoToNextLevel()
