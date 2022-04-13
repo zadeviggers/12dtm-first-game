@@ -4,23 +4,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private GameManager gameManager;
-
+    // Constants
     private float walkSpeed = 5.1f;
     private float jumpSpeed = 200.1f;
     private float airSpeedMultiplier = 1.4f;
 
+    // Variables
     private bool isOnGround = false;
     private bool canJump = false;
+    private Rigidbody2D rb;
+    private GameManager gameManager;
 
+    // These are set in the unity inspector
     public ParticleSystem deathParticles;
     public GameObject gameManagerObject;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Load rigid body component
         rb = GetComponent<Rigidbody2D>();
+
+        // Load game manager script so it's methods can be called
         gameManager = gameManagerObject.GetComponent<GameManager>();
     }
 
@@ -82,7 +87,10 @@ public class PlayerController : MonoBehaviour
     }
 
     void KillPlayer() {
+        // Create death particle effects
         Instantiate(deathParticles, gameObject.transform);
+
+        // Trigger lose logic
         gameManager.Lose();
     }
 }

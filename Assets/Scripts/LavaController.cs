@@ -4,26 +4,29 @@ using UnityEngine;
 
 public class LavaController : MonoBehaviour
 {
-    public ParticleSystem particlesPrefab;
-    private ParticleSystem particles;
-
+    // Constants
     private float lavaRiseWaitTime = 0.00001f;
     private float lavaRiseRate = 0.03f;
+    public ParticleSystem particlesPrefab; // Set in unity inspector
 
+    // Variables
+    private ParticleSystem particles;
+
+    // Called when gameobject is instantiated (on scene load in this case)
     void Start()
     {
-        StartCoroutine(MakeLavalRiseRoutine());
+        // Instantiate lava particles
         particles = Instantiate(particlesPrefab);
+
+        // Start lava rising
+        StartCoroutine(MakeLavalRiseRoutine());
     }
 
-    void Update()
-    {
-        
-    }
-
-
+    // Looping coroutine that makes the lava rise
     IEnumerator MakeLavalRiseRoutine() {
+        // Wait a little before increasing lava rise
         yield return new WaitForSeconds(lavaRiseWaitTime);
+
         // Increase Y scale
         gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x, gameObject.transform.localScale.y + lavaRiseRate, gameObject.transform.localScale.z);
 

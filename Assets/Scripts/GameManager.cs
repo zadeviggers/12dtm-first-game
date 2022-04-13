@@ -6,28 +6,22 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // Name of the next level, set in unity inspector
     public string nextLevelName;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void Lose() {
         Debug.Log("Game over!");
+
+        // Name of the current scene
         string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Re-load the current scene (which "restarts" the level)
         SceneManager.LoadScene(currentSceneName);
     }
 
     public void GoToNextLevel()
     {
+        // Load next scene
         SceneManager.LoadScene(nextLevelName);
     }
 }
