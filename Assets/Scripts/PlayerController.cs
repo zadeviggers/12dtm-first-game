@@ -14,16 +14,24 @@ public class PlayerController : MonoBehaviour
     private bool canJump = false;
     private Rigidbody2D rb;
     private GameManager gameManager;
+    private GameObject gameManagerObject;
+    // AudioSource used for jump sound effect
+    private AudioSource jumpSoundEffect;
 
     // These are set in the unity inspector
     public ParticleSystem deathParticles;
-    public GameObject gameManagerObject;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         // Load rigid body component
         rb = GetComponent<Rigidbody2D>();
+        // Load jump sound effect
+        jumpSoundEffect = GetComponent<AudioSource>();
+
+        // Get the game maager from the scene
+        gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
 
         // Load game manager script so it's methods can be called
         gameManager = gameManagerObject.GetComponent<GameManager>();
@@ -46,10 +54,19 @@ public class PlayerController : MonoBehaviour
 
         // Jumping
         float jumpingInput = Input.GetAxis("Vertical");
-        
+
         // If the input is upwards and the player hasn't jumped...
-        if (jumpingInput > 0 && isOnGround && canJump)
+        if (jumpingInput > 0)
         {
+            Jump();
+        }
+    }
+
+    void Jump()
+    {
+        if (isOnGround && canJump)
+        {
+            jumpSoundEffect.Play();
             rb.AddForce(Vector2.up * jumpSpeed);
             canJump = false;
         }
@@ -60,7 +77,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Deadly"))
         {
             KillPlayer();
-        } 
+        }
         else if (collision.gameObject.CompareTag("Finish"))
         {
             gameManager.GoToNextLevel();
@@ -86,7 +103,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void KillPlayer() {
+    void KillPlayer()
+    {
         // Create death particle effects
         Instantiate(deathParticles, gameObject.transform);
 

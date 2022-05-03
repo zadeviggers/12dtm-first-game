@@ -23,7 +23,8 @@ public class LavaController : MonoBehaviour
     }
 
     // Looping coroutine that makes the lava rise
-    IEnumerator MakeLavalRiseRoutine() {
+    IEnumerator MakeLavalRiseRoutine()
+    {
         // Wait a little before increasing lava rise
         yield return new WaitForSeconds(lavaRiseWaitTime);
 
