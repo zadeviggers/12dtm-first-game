@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private bool isOnGround = false;
     private bool canJump = false;
     private Rigidbody2D rb;
-    private GameManager gameManager;
+    private GameManager gameManagerScript;
     private GameObject gameManagerObject;
     // AudioSource used for jump sound effect
     private AudioSource jumpSoundEffect;
@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
         gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
 
         // Load game manager script so it's methods can be called
-        gameManager = gameManagerObject.GetComponent<GameManager>();
+        gameManagerScript = gameManagerObject.GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Finish"))
         {
-            gameManager.GoToNextLevel();
+            gameManagerScript.GoToNextLevel();
         }
     }
 
@@ -109,6 +109,6 @@ public class PlayerController : MonoBehaviour
         Instantiate(deathParticles, gameObject.transform);
 
         // Trigger lose logic
-        gameManager.Lose();
+        gameManagerScript.Lose();
     }
 }
