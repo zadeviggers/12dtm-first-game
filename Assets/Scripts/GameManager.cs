@@ -14,17 +14,26 @@ public class GameManager : MonoBehaviour
     public void Start()
     {
         // Check to make sure that this is the only instance of GameManager in the scene
+
+        // Get all game objects in the scene that are tagged as game mamangers
         GameObject[]  otherInstances = GameObject.FindGameObjectsWithTag("GameManager");
 
+        // Variable for tracking if this is the only instace of GameManager in the scene
         bool notFirst = false;
+
+        // Loop over all the game managers found above
         foreach (GameObject oneOther in otherInstances)
         {
+            // Check that the object is from an assetbundle
+            // scene.buildIndex is set to -1 when it is loaded from an asset bundle
             if (oneOther.scene.buildIndex == -1)
             {
                 notFirst = true;
             }
         }
 
+        // If this GameManager isn't the first in the scene, make it destroy itself
+        // THERE CAN ONLY BE ONE!!
         if (notFirst == true)
         {
             Destroy(gameObject);
@@ -58,18 +67,30 @@ public class GameManager : MonoBehaviour
         // Play win sound effect
         levelWinSoundEffect.Play();
 
-
+        // Get name of current level
         string currentSceneName = SceneManager.GetActiveScene().name;
-        // Get number of current level
-        string currentSceneNumber = currentSceneName.Substring(currentSceneName.Length - 1);
-        string nextLevelName = "Level" + currentSceneNumber;
 
-        if (!SceneManager.GetSceneByName(nextLevelName).IsValid()) 
+        // Get number of current level. Level names are in the format "Level.lvel-number"
+        string[] splitCurrenSceneName = currentSceneName.Split(".");
+
+        // Cast the level number from the level name to an integer
+        int currentSceneNumber = int.Parse(splitCurrenSceneName[1]);
+
+        // Add 1 to get the number of the next level
+        int nextLevelNumber = currentSceneNumber + 1;
+
+        // Generate name of next level from number
+        string nextLevelName = "Level." + nextLevelNumber;
+
+        // Check if a level of the generated name exists.
+        // If one isn't found, then use level 1 instead
+        if (!Application.CanStreamedLevelBeLoaded(nextLevelName)) 
         {
-            nextLevelName = "Level1";
+            Debug.Log("Next scene not valid: " + nextLevelName);
+            nextLevelName = "Level.1";
         }
 
-        // Load next scene
+        // Load the next scene
         SceneManager.LoadScene(nextLevelName);
     }
 }
