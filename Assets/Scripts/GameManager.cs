@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
         string currentSceneName = SceneManager.GetActiveScene().name;
 
         // Re-load the current scene (which "restarts" the level)
-        SceneManager.LoadScene(currentSceneName);
+        SceneManager.LoadSceneAsync(currentSceneName);
     }
 
     public void GoToNextLevel()
@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour
         }
 
         // Load the next scene
-        SceneManager.LoadScene(nextLevelName);
+        
+        SceneManager.LoadSceneAsync(nextLevelName);
     }
 }
