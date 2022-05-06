@@ -8,8 +8,28 @@ public class GameManager : MonoBehaviour
 {
     // AudioSource used for the level win sound effect
     private AudioSource levelWinSoundEffect;
+
     // AudioSource used for the death sound effect
     private AudioSource deathSoundEffect;
+
+    // These are set in the unity inspector
+    public ParticleSystem winParticles;
+
+    // The level end markers
+    private GameObject[] levelEndMarkers;
+
+    // Called before start
+    public void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) {
+        // Get level end markers in current level
+        levelEndMarkers = GameObject.FindGameObjectsWithTag("Finish");
+    }
+
 
     public void Start()
     {
@@ -48,6 +68,7 @@ public class GameManager : MonoBehaviour
         deathSoundEffect = soundEffects[1];
     }
 
+
     public void Lose()
     {
         Debug.Log("Game over!");
@@ -67,6 +88,12 @@ public class GameManager : MonoBehaviour
         // Play win sound effect
         levelWinSoundEffect.Play();
 
+        // Play win particles at all level end markers
+        foreach (GameObject marker in levelEndMarkers)
+        {
+            Instantiate(winParticles, marker.transform);
+        }
+        
         // Get name of current level
         string currentSceneName = SceneManager.GetActiveScene().name;
 
