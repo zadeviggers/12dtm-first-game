@@ -15,8 +15,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private GameManager gameManagerScript;
     private GameObject gameManagerObject;
+
     // AudioSource used for jump sound effect
-    private AudioSource jumpSoundEffect;
+    private AudioSource[] jumpSoundEffects;
 
     // These are set in the unity inspector
     public ParticleSystem deathParticles;
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour
         // Load rigid body component
         rb = GetComponent<Rigidbody2D>();
         // Load jump sound effect
-        jumpSoundEffect = GetComponent<AudioSource>();
+        jumpSoundEffects = GetComponents<AudioSource>();
 
         // Get the game maager from the scene
         gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
@@ -66,10 +67,17 @@ public class PlayerController : MonoBehaviour
     {
         if (isOnGround && canJump)
         {
-            jumpSoundEffect.Play();
+            PlayJumpSoundEffect();
             rb.AddForce(Vector2.up * jumpSpeed);
             canJump = false;
         }
+    }
+
+    void PlayJumpSoundEffect()
+    {
+        int soundEffectIndex = Random.Range(0, jumpSoundEffects.Length);
+        AudioSource soundEffect = jumpSoundEffects[soundEffectIndex];
+        soundEffect.Play();
     }
 
     void OnTriggerEnter2D(Collider2D collision)
