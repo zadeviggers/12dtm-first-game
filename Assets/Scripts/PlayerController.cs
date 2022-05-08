@@ -7,11 +7,12 @@ public class PlayerController : MonoBehaviour
     // Constants
     private float walkSpeed = 5.1f;
     private float jumpSpeed = 200.1f;
-    private float airSpeedMultiplier = 1.4f;
+    private float airSpeedMultiplier = 1.3f; // Speed multiplier for moving mid-air
 
-    // Variables
+    // Movement Variables
     private bool isOnGround = false;
     private bool canJump = false;
+    // Other variables
     private Rigidbody2D rb;
     private GameManager gameManagerScript;
     private GameObject gameManagerObject;
@@ -63,23 +64,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Jump()
-    {
-        if (isOnGround && canJump)
-        {
-            PlayJumpSoundEffect();
-            rb.AddForce(Vector2.up * jumpSpeed);
-            canJump = false;
-        }
-    }
-
-    void PlayJumpSoundEffect()
-    {
-        int soundEffectIndex = Random.Range(0, jumpSoundEffects.Length);
-        AudioSource soundEffect = jumpSoundEffects[soundEffectIndex];
-        soundEffect.Play();
-    }
-
+    // Called when the player enters a trigger
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Deadly"))
@@ -92,6 +77,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Called when the player starts colliding with something
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -101,6 +87,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Called when the player stops colliding with something
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -111,10 +98,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Method to make the player jump
+    void Jump()
+    {
+        // Check that the player is allowed to jump
+        if (isOnGround && canJump)
+        {
+            PlayJumpSoundEffect();
+            // Add force
+            rb.AddForce(Vector2.up * jumpSpeed);
+            canJump = false;
+        }
+    }
+
+    // Method to play the jump sound effect
+    void PlayJumpSoundEffect()
+    {
+        // Choose a random jump sound effect from the ones available
+        int soundEffectIndex = Random.Range(0, jumpSoundEffects.Length);
+        AudioSource soundEffect = jumpSoundEffects[soundEffectIndex];
+        
+        // Play sound effect
+        soundEffect.Play();
+    }
+
+    // Kill the player
     void KillPlayer()
     {
         // Create death particle effects
         Instantiate(deathParticles, gameObject.transform);
+
+        // Hide player by disabling sprite renderer
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         // Trigger lose logic
         gameManagerScript.Lose();

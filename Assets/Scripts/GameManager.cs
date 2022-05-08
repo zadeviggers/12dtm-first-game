@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     // The level end markers
     private GameObject[] levelEndMarkers;
 
-    // Called before start
+    // Called before Start method
     public void Awake()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
